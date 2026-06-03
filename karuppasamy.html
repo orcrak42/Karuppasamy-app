@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>கருப்பசாமி அருள் - Karuppasamy Blessings</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=Cinzel+Decorative:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #FFD700;
+    --deep-gold: #B8860B;
+    --saffron: #FF6B00;
+    --crimson: #8B0000;
+    --dark: #0A0400;
+    --smoke: #1a0a00;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    min-height: 100vh;
+    font-family: 'Lora', serif;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Flame particle background */
+  .bg-flames {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(ellipse at 50% 100%, #3a1000 0%, #0A0400 60%);
+    overflow: hidden;
+  }
+
+  .flame-particle {
+    position: absolute;
+    bottom: -20px;
+    width: 4px;
+    border-radius: 50% 50% 20% 20%;
+    animation: riseFlame linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes riseFlame {
+    0%   { transform: translateY(0) scaleX(1); opacity: 0.8; }
+    50%  { transform: translateY(-40vh) scaleX(1.3); opacity: 0.5; }
+    100% { transform: translateY(-80vh) scaleX(0.5); opacity: 0; }
+  }
+
+  /* Top header */
+  .header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 28px 20px 10px;
+  }
+
+  .header h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(1.1rem, 4vw, 1.8rem);
+    color: var(--gold);
+    text-shadow: 0 0 20px #FFD70099, 0 0 40px #FF6B0066;
+    letter-spacing: 2px;
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+
+  .header .tamil-title {
+    font-family: 'Tiro Tamil', serif;
+    font-size: clamp(1.3rem, 5vw, 2rem);
+    color: var(--saffron);
+    text-shadow: 0 0 15px #FF6B0099;
+    margin-top: 4px;
+    display: block;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { text-shadow: 0 0 20px #FFD70099, 0 0 40px #FF6B0066; }
+    50%       { text-shadow: 0 0 35px #FFD700cc, 0 0 70px #FF6B00aa; }
+  }
+
+  .divider {
+    margin: 12px auto;
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--saffron), var(--gold), transparent);
+  }
+
+  /* Main card area */
+  .shrine {
+    position: relative;
+    z-index: 10;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .card-wrapper {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 2px var(--deep-gold),
+      0 0 30px #FF6B0055,
+      0 0 60px #8B000033,
+      inset 0 0 40px #00000066;
+    aspect-ratio: 3/4;
+    background: #1a0800;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide.active { opacity: 1; }
+
+  /* Each slide uses a different artistic depiction */
+  .slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.2) contrast(1.05);
+  }
+
+  /* Overlay gradient on each slide */
+  .slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(10,4,0,0.85) 100%
+    );
+  }
+
+  /* Fallback artistic slide when no real image */
+  .slide-art {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    z-index: 5;
+    padding: 20px 20px 16px;
+    text-align: center;
+  }
+
+  .slide-caption .god-name {
+    font-family: 'Tiro Tamil', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    text-shadow: 0 0 10px #FFD70099;
+    display: block;
+  }
+
+  .slide-caption .blessing-text {
+    font-family: 'Tiro Tamil', serif;
+    font-size: 0.85rem;
+    color: #FFD78088;
+    margin-top: 4px;
+    font-style: italic;
+    display: block;
+  }
+
+  /* Artistic slide designs */
+  .slide-1 .slide-art { background: radial-gradient(ellipse at 50% 30%, #3d1500, #0a0400); }
+  .slide-2 .slide-art { background: radial-gradient(ellipse at 50% 30%, #2d0000, #0a0400); }
+  .slide-3 .slide-art { background: radial-gradient(ellipse at 50% 30%, #1a1000, #050400); }
+  .slide-4 .slide-art { background: radial-gradient(ellipse at 50% 30%, #2a0a0a, #0a0400); }
+  .slide-5 .slide-art { background: radial-gradient(ellipse at 50% 30%, #1d1200, #0a0400); }
+
+  .deity-symbol {
+    font-size: 7rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 20px var(--saffron));
+    animation: floatDeity 4s ease-in-out infinite;
+    margin-bottom: 12px;
+  }
+
+  @keyframes floatDeity {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+  }
+
+  .deity-aura {
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    top: 15%;
+    left: 50%; transform: translateX(-50%);
+    animation: auraGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes auraGlow {
+    0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+    50%       { opacity: 0.6; transform: translateX(-50%) scale(1.1); }
+  }
+
+  .aura-1 { background: radial-gradient(circle, #FF6B0055 0%, transparent 70%); }
+  .aura-2 { background: radial-gradient(circle, #FFD70044 0%, transparent 70%); }
+  .aura-3 { background: radial-gradient(circle, #FF000044 0%, transparent 70%); }
+  .aura-4 { background: radial-gradient(circle, #FFA50055 0%, transparent 70%); }
+  .aura-5 { background: radial-gradient(circle, #FFD70066 0%, transparent 70%); }
+
+  /* Lamp flames at corners */
+  .lamp {
+    position: absolute;
+    font-size: 1.8rem;
+    animation: flickerLamp 1.5s ease-in-out infinite;
+    z-index: 6;
+    filter: drop-shadow(0 0 8px #FF6B00);
+  }
+  .lamp-tl { top: 12px; left: 12px; animation-delay: 0s; }
+  .lamp-tr { top: 12px; right: 12px; animation-delay: 0.3s; }
+  .lamp-bl { bottom: 60px; left: 12px; animation-delay: 0.6s; }
+  .lamp-br { bottom: 60px; right: 12px; animation-delay: 0.9s; }
+
+  @keyframes flickerLamp {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    25%       { opacity: 0.7; transform: scale(0.95) rotate(-3deg); }
+    75%       { opacity: 0.9; transform: scale(1.05) rotate(3deg); }
+  }
+
+  /* Navigation */
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin: 20px 0 12px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .nav-btn {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--deep-gold);
+    background: rgba(255,215,0,0.08);
+    color: var(--gold);
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    box-shadow: 0 0 12px #FFD70033;
+  }
+
+  .nav-btn:hover, .nav-btn:active {
+    background: rgba(255,215,0,0.2);
+    box-shadow: 0 0 24px #FFD70066;
+    transform: scale(1.1);
+  }
+
+  .dots {
+    display: flex; gap: 8px;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--deep-gold);
+    opacity: 0.4;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .dot.active {
+    opacity: 1;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+    transform: scale(1.3);
+  }
+
+  /* Audio / Blessing section */
+  .blessing-panel {
+    position: relative;
+    z-index: 10;
+    max-width: 420px;
+    margin: 0 auto 16px;
+    padding: 0 16px;
+  }
+
+  .blessing-card {
+    background: linear-gradient(135deg, rgba(139,0,0,0.3), rgba(255,107,0,0.15));
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 16px;
+    padding: 16px 20px;
+    text-align: center;
+    box-shadow: 0 0 20px #FF6B0022;
+  }
+
+  .blessing-card .label {
+    font-family: 'Tiro Tamil', serif;
+    font-size: 0.8rem;
+    color: var(--saffron);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .blessing-text-display {
+    font-family: 'Tiro Tamil', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    line-height: 1.6;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 8px #FFD70055;
+  }
+
+  /* Audio controls */
+  .audio-controls {
+    position: relative;
+    z-index: 10;
+    max-width: 420px;
+    margin: 0 auto 24px;
+    padding: 0 16px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .audio-btn {
+    flex: 1;
+    max-width: 160px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1.5px solid var(--deep-gold);
+    background: rgba(255,215,0,0.06);
+    color: var(--gold);
+    font-family: 'Lora', serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s;
+  }
+
+  .audio-btn:hover, .audio-btn.active {
+    background: rgba(255,107,0,0.2);
+    border-color: var(--saffron);
+    box-shadow: 0 0 16px #FF6B0044;
+  }
+
+  .audio-btn .icon { font-size: 1.2rem; }
+
+  /* Waveform visual */
+  .waveform {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 24px;
+  }
+
+  .wave-bar {
+    width: 3px;
+    background: var(--saffron);
+    border-radius: 2px;
+    animation: waveAnim 0.8s ease-in-out infinite;
+    opacity: 0;
+  }
+
+  .playing .wave-bar { opacity: 1; }
+
+  .wave-bar:nth-child(1) { animation-delay: 0s;    height: 8px; }
+  .wave-bar:nth-child(2) { animation-delay: 0.1s;  height: 16px; }
+  .wave-bar:nth-child(3) { animation-delay: 0.2s;  height: 22px; }
+  .wave-bar:nth-child(4) { animation-delay: 0.15s; height: 14px; }
+  .wave-bar:nth-child(5) { animation-delay: 0.05s; height: 10px; }
+
+  @keyframes waveAnim {
+    0%, 100% { transform: scaleY(0.4); }
+    50%       { transform: scaleY(1); }
+  }
+
+  /* Flower petals */
+  .petals {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    top: -30px;
+    font-size: 1rem;
+    animation: fallPetal linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes fallPetal {
+    0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.7; }
+    100% { transform: translateY(100vh) rotate(360deg) translateX(40px); opacity: 0; }
+  }
+
+  /* Footer */
+  .footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 0 30px;
+    color: rgba(255,215,0,0.3);
+    font-size: 0.7rem;
+    font-family: 'Tiro Tamil', serif;
+    letter-spacing: 1px;
+  }
+
+  /* Bell ring animation */
+  .bell-row {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .bell {
+    font-size: 1.6rem;
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.1s;
+    filter: drop-shadow(0 0 6px #FFD700);
+  }
+
+  .bell.ring {
+    animation: ringBell 0.6s ease-in-out;
+  }
+
+  @keyframes ringBell {
+    0%   { transform: rotate(0); }
+    20%  { transform: rotate(20deg); }
+    40%  { transform: rotate(-20deg); }
+    60%  { transform: rotate(15deg); }
+    80%  { transform: rotate(-10deg); }
+    100% { transform: rotate(0); }
+  }
+
+  /* Prasad / offer button */
+  .offer-row {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .offer-btn {
+    background: linear-gradient(135deg, var(--crimson), var(--saffron));
+    color: var(--gold);
+    border: none;
+    border-radius: 30px;
+    padding: 10px 28px;
+    font-family: 'Tiro Tamil', serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px #FF6B0055;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+  }
+
+  .offer-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px #FF6B0088;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(139,0,0,0.95);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-family: 'Tiro Tamil', serif;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: 100;
+    white-space: nowrap;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Background flames -->
+<div class="bg-flames" id="bgFlames"></div>
+
+<!-- Falling petals -->
+<div class="petals" id="petals"></div>
+
+<!-- Header -->
+<div class="header">
+  <h1>✦ KARUPPASAMY ✦</h1>
+  <span class="tamil-title">கருப்பசாமி அருள்வாக்கு</span>
+  <div class="divider"></div>
+</div>
+
+<!-- Main shrine -->
+<div class="shrine">
+  <div class="card-wrapper" id="cardWrapper">
+
+    <!-- Lamp decorations -->
+    <div class="lamp lamp-tl">🪔</div>
+    <div class="lamp lamp-tr">🪔</div>
+    <div class="lamp lamp-bl">🪔</div>
+    <div class="lamp lamp-br">🪔</div>
+
+    <!-- Slide 1 -->
+    <div class="slide slide-1 active">
+      <div class="slide-art">
+        <div class="deity-aura aura-1"></div>
+        <div style="text-align:center; z-index:2; padding: 20px;">
+          <div style="font-size:5rem; animation: floatDeity 4s ease-in-out infinite; filter: drop-shadow(0 0 20px #FF6B00);">⚔️</div>
+          <div style="font-size:3rem; margin-top:8px; filter: drop-shadow(0 0 15px #FFD700);">🐴</div>
+          <div style="font-family:'Tiro Tamil',serif; color:#FFD700; font-size:1.2rem; margin-top:16px; text-shadow: 0 0 10px #FFD700;">காளிக் கருப்பன்</div>
+          <div style="font-family:'Lora',serif; color:#FF8C00; font-size:0.8rem; margin-top:4px; font-style:italic;">Guardian of the South</div>
+        </div>
+      </div>
+      <div class="slide-caption">
+        <span class="god-name">வேல் கருப்பசாமி</span>
+        <span class="blessing-text">அருள் பொழியும் தெய்வம்</span>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide slide-2">
+      <div class="slide-art">
+        <div class="deity-aura aura-2"></div>
+        <div style="text-align:center; z-index:2; padding: 20px;">
+          <div style="font-size:5rem; animation: floatDeity 4s ease-in-out infinite 0.5s; filter: drop-shadow(0 0 20px #FF0000);">🔱</div>
+          <div style="font-size:2.5rem; margin-top:8px; filter: drop-shadow(0 0 12px #FF6B00);">🌺🌺🌺</div>
+          <div style="font-family:'Tiro Tamil',serif; color:#FFD700; font-size:1.2rem; margin-top:16px; text-shadow: 0 0 10px #FFD700;">சாமி கருப்பன்</div>
+          <div style="font-family:'Lora',serif; color:#FF8C00; font-size:0.8rem; margin-top:4px; font-style:italic;">Protector of Devotees</div>
+        </div>
+      </div>
+      <div class="slide-caption">
+        <span class="god-name">நாட்டு கருப்பசாமி</span>
+        <span class="blessing-text">பக்தரை காக்கும் தெய்வம்</span>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide slide-3">
+      <div class="slide-art">
+        <div class="deity-aura aura-3"></div>
+        <div style="text-align:center; z-index:2; padding: 20px;">
+          <div style="font-size:5rem; animation: floatDeity 4s ease-in-out infinite 1s; filter: drop-shadow(0 0 20px #FFA500);">🪬</div>
+          <div style="font-size:2.5rem; margin-top:8px; filter: drop-shadow(0 0 12px #FF6B00);">🔥🔥🔥</div>
+          <div style="font-family:'Tiro Tamil',serif; color:#FFD700; font-size:1.2rem; margin-top:16px; text-shadow: 0 0 10px #FFD700;">குதிரை கருப்பன்</div>
+          <div style="font-family:'Lora',serif; color:#FF8C00; font-size:0.8rem; margin-top:4px; font-style:italic;">Lord of Justice</div>
+        </div>
+      </div>
+      <div class="slide-caption">
+        <span class="god-name">குதிரை கருப்பசாமி</span>
+        <span class="blessing-text">நீதி வழங்கும் தெய்வம்</span>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide slide-4">
+      <div class="slide-art">
+        <div class="deity-aura aura-4"></div>
+        <div style="text-align:center; z-index:2; padding: 20px;">
+          <div style="font-size:5rem; animation: floatDeity 4s ease-in-out infinite 1.5s; filter: drop-shadow(0 0 20px #FF4500);">🌙</div>
+          <div style="font-size:2.5rem; margin-top:8px; filter: drop-shadow(0 0 12px #FFD700);">⭐🌟⭐</div>
+          <div style="font-family:'Tiro Tamil',serif; color:#FFD700; font-size:1.2rem; margin-top:16px; text-shadow: 0 0 10px #FFD700;">இரவு கருப்பன்</div>
+          <div style="font-family:'Lora',serif; color:#FF8C00; font-size:0.8rem; margin-top:4px; font-style:italic;">Night Wanderer God</div>
+        </div>
+      </div>
+      <div class="slide-caption">
+        <span class="god-name">இரவு கருப்பசாமி</span>
+        <span class="blessing-text">இரவும் காக்கும் தெய்வம்</span>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide slide-5">
+      <div class="slide-art">
+        <div class="deity-aura aura-5"></div>
+        <div style="text-align:center; z-index:2; padding: 20px;">
+          <div style="font-size:5rem; animation: floatDeity 4s ease-in-out infinite 2s; filter: drop-shadow(0 0 20px #FFD700);">👁️</div>
+          <div style="font-size:2.5rem; margin-top:8px; filter: drop-shadow(0 0 12px #FF6B00);">🪷🪷🪷</div>
+          <div style="font-family:'Tiro Tamil',serif; color:#FFD700; font-size:1.2rem; margin-top:16px; text-shadow: 0 0 10px #FFD700;">ஞான கருப்பன்</div>
+          <div style="font-family:'Lora',serif; color:#FF8C00; font-size:0.8rem; margin-top:4px; font-style:italic;">Bestower of Wisdom</div>
+        </div>
+      </div>
+      <div class="slide-caption">
+        <span class="god-name">ஞான கருப்பசாமி</span>
+        <span class="blessing-text">ஞானம் தரும் தெய்வம்</span>
+      </div>
+    </div>
+
+  </div><!-- card-wrapper -->
+
+  <!-- Navigation -->
+  <div class="nav-row">
+    <button class="nav-btn" id="prevBtn">◀</button>
+    <div class="dots" id="dots">
+      <div class="dot active" data-i="0"></div>
+      <div class="dot" data-i="1"></div>
+      <div class="dot" data-i="2"></div>
+      <div class="dot" data-i="3"></div>
+      <div class="dot" data-i="4"></div>
+    </div>
+    <button class="nav-btn" id="nextBtn">▶</button>
+  </div>
+</div><!-- shrine -->
+
+<!-- Bell -->
+<div class="bell-row">
+  <span class="bell" id="bellBtn" title="Ring the bell">🔔</span>
+</div>
+
+<!-- Offer / Prasad -->
+<div class="offer-row">
+  <button class="offer-btn" id="offerBtn">🌺 அர்ச்சனை செய்யுங்கள் 🌺</button>
+</div>
+
+<!-- Blessing text panel -->
+<div class="blessing-panel">
+  <div class="blessing-card">
+    <span class="label">🙏 அருள்வாக்கு — Divine Blessing 🙏</span>
+    <div class="blessing-text-display" id="blessingText">
+      கருப்பசாமி உங்களை காக்கட்டும்
+    </div>
+  </div>
+</div>
+
+<!-- Audio controls -->
+<div class="audio-controls">
+  <button class="audio-btn" id="playBtn">
+    <span class="icon">🔊</span>
+    <span>Blessing</span>
+    <div class="waveform" id="waveform">
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+    </div>
+  </button>
+  <button class="audio-btn" id="bgMusicBtn">
+    <span class="icon">🥁</span>
+    <span>Nadaswaram</span>
+  </button>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  ॐ கருப்பசாமி சரணம் ॐ<br>
+  <span style="opacity:0.5">Devotional App · Dr's Blessing Corner</span>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────
+const slides = [
+  { name: "வேல் கருப்பசாமி", blessing: "வேலன் கருப்பன் உன்னை காப்பான் — உன் வாழ்வில் வெற்றி தருவான்!" },
+  { name: "நாட்டு கருப்பசாமி", blessing: "நாட்டுக் கோட்டை கருப்பன் — குடும்பத்தை காக்கும் தெய்வம்!" },
+  { name: "குதிரை கருப்பசாமி", blessing: "குதிரை மேல் வரும் கருப்பன் — உன் எதிரிகளை அழிப்பான்!" },
+  { name: "இரவு கருப்பசாமி", blessing: "இரவு நேரம் காக்கும் கருப்பன் — உன்னை எந்நேரமும் காப்பான்!" },
+  { name: "ஞான கருப்பசாமி", blessing: "ஞானமும் வலிமையும் தரும் கருப்பன் — உன் வாழ்க்கை மலரட்டும்!" }
+];
+
+const petalEmojis = ['🌸','🌺','🌼','🌻','🏵️','🌹'];
+const offerMessages = [
+  "🌺 கருப்பசாமிக்கு அர்ச்சனை ஏற்கப்பட்டது! அவர் ஆசி தருவார்!",
+  "🪷 உங்கள் பூஜை கருப்பசாமிக்கு சேர்ந்தது! அருள் கிட்டும்!",
+  "🙏 கருப்பன் உங்கள் வேண்டுதலை கேட்டார்! நலமாக இருப்பீர்!",
+  "🔱 ஆதி கருப்பன் உங்களை ஆசீர்வதிக்கிறார்!",
+  "⚔️ கருப்பசாமியின் அருள் உங்கள் மேல் பொழிகிறது!"
+];
+
+// ── State ─────────────────────────────────────────────────────────────
+let current = 0;
+let isPlaying = false;
+let isBgPlaying = false;
+let speechUtter = null;
+let bgAudioCtx = null;
+let bgNodes = [];
+let autoSlide = null;
+
+// ── DOM refs ──────────────────────────────────────────────────────────
+const slideEls  = document.querySelectorAll('.slide');
+const dotEls    = document.querySelectorAll('.dot');
+const blessingEl = document.getElementById('blessingText');
+const waveform  = document.getElementById('waveform');
+const playBtn   = document.getElementById('playBtn');
+const bgMusicBtn= document.getElementById('bgMusicBtn');
+const toast     = document.getElementById('toast');
+const bellBtn   = document.getElementById('bellBtn');
+const offerBtn  = document.getElementById('offerBtn');
+
+// ── Slide logic ───────────────────────────────────────────────────────
+function goTo(n) {
+  slideEls[current].classList.remove('active');
+  dotEls[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slideEls[current].classList.add('active');
+  dotEls[current].classList.add('active');
+  blessingEl.style.opacity = 0;
+  setTimeout(() => {
+    blessingEl.textContent = slides[current].blessing;
+    blessingEl.style.opacity = 1;
+  }, 400);
+  blessingEl.style.transition = 'opacity 0.4s';
+  if (isPlaying) speakBlessing();
+}
+
+document.getElementById('nextBtn').onclick = () => goTo(current + 1);
+document.getElementById('prevBtn').onclick = () => goTo(current - 1);
+dotEls.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i)));
+
+// Auto-slide every 6s
+autoSlide = setInterval(() => goTo(current + 1), 6000);
+
+// ── Speech synthesis ──────────────────────────────────────────────────
+function speakBlessing() {
+  if (!window.speechSynthesis) { showToast("இந்த browser-ல் voice இல்லை"); return; }
+  window.speechSynthesis.cancel();
+  const text = slides[current].blessing;
+  speechUtter = new SpeechSynthesisUtterance(text);
+  speechUtter.lang = 'ta-IN';
+  speechUtter.rate = 0.85;
+  speechUtter.pitch = 0.9;
+  speechUtter.volume = 1;
+  // Try to get Tamil voice
+  const voices = window.speechSynthesis.getVoices();
+  const tamilVoice = voices.find(v => v.lang.startsWith('ta'));
+  if (tamilVoice) speechUtter.voice = tamilVoice;
+  speechUtter.onend = () => { isPlaying = false; waveform.classList.remove('playing'); playBtn.classList.remove('active'); };
+  window.speechSynthesis.speak(speechUtter);
+  waveform.classList.add('playing');
+  playBtn.classList.add('active');
+  isPlaying = true;
+}
+
+playBtn.onclick = () => {
+  if (isPlaying) {
+    window.speechSynthesis?.cancel();
+    isPlaying = false;
+    waveform.classList.remove('playing');
+    playBtn.classList.remove('active');
+  } else {
+    speakBlessing();
+  }
+};
+
+// ── Web Audio — nadaswaram-like drone ─────────────────────────────────
+function startBgMusic() {
+  try {
+    bgAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const masterGain = bgAudioCtx.createGain();
+    masterGain.gain.value = 0.18;
+    masterGain.connect(bgAudioCtx.destination);
+
+    // Drone frequencies (Sa + Pa in C — temple feel)
+    const freqs = [130.81, 196.00, 261.63, 392.00, 523.25];
+    bgNodes = freqs.map((freq, i) => {
+      const osc = bgAudioCtx.createOscillator();
+      const gain = bgAudioCtx.createGain();
+      osc.type = i % 2 === 0 ? 'sawtooth' : 'sine';
+      osc.frequency.value = freq;
+      // Slow LFO vibrato
+      const lfo = bgAudioCtx.createOscillator();
+      const lfoGain = bgAudioCtx.createGain();
+      lfo.frequency.value = 0.3 + i * 0.1;
+      lfoGain.gain.value = 2;
+      lfo.connect(lfoGain);
+      lfoGain.connect(osc.frequency);
+      lfo.start();
+      gain.gain.value = 0.06 / (i + 1);
+      osc.connect(gain);
+      gain.connect(masterGain);
+      osc.start();
+      return { osc, gain, lfo };
+    });
+
+    // Bell-like percussion every ~4 beats
+    scheduleBell();
+
+    isBgPlaying = true;
+    bgMusicBtn.classList.add('active');
+    bgMusicBtn.querySelector('span:last-child').textContent = 'Stop';
+  } catch(e) {
+    showToast("Audio not supported");
+  }
+}
+
+function scheduleBell() {
+  if (!bgAudioCtx || !isBgPlaying) return;
+  const osc = bgAudioCtx.createOscillator();
+  const env = bgAudioCtx.createGain();
+  osc.type = 'sine';
+  osc.frequency.value = 880;
+  env.gain.setValueAtTime(0.5, bgAudioCtx.currentTime);
+  env.gain.exponentialRampToValueAtTime(0.001, bgAudioCtx.currentTime + 1.5);
+  osc.connect(env);
+  env.connect(bgAudioCtx.destination);
+  osc.start();
+  osc.stop(bgAudioCtx.currentTime + 1.5);
+  setTimeout(scheduleBell, 3500 + Math.random() * 2000);
+}
+
+function stopBgMusic() {
+  bgNodes.forEach(n => { try { n.osc.stop(); n.lfo.stop(); } catch(e){} });
+  bgNodes = [];
+  if (bgAudioCtx) { bgAudioCtx.close(); bgAudioCtx = null; }
+  isBgPlaying = false;
+  bgMusicBtn.classList.remove('active');
+  bgMusicBtn.querySelector('span:last-child').textContent = 'Nadaswaram';
+}
+
+bgMusicBtn.onclick = () => isBgPlaying ? stopBgMusic() : startBgMusic();
+
+// ── Bell ──────────────────────────────────────────────────────────────
+bellBtn.onclick = () => {
+  bellBtn.classList.add('ring');
+  setTimeout(() => bellBtn.classList.remove('ring'), 700);
+  // Bell chime via WebAudio
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [880, 1100, 1320].forEach((f, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.frequency.value = f;
+      o.type = 'sine';
+      g.gain.setValueAtTime(0.3, ctx.currentTime + i*0.05);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i*0.05 + 1.2);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime + i*0.05);
+      o.stop(ctx.currentTime + i*0.05 + 1.2);
+    });
+    setTimeout(() => ctx.close(), 2000);
+  } catch(e) {}
+  showToast("🔔 கோவில் மணி அடிக்கிறது!");
+};
+
+// ── Offer / Archana ───────────────────────────────────────────────────
+offerBtn.onclick = () => {
+  spawnPetals(20);
+  const msg = offerMessages[Math.floor(Math.random() * offerMessages.length)];
+  showToast(msg);
+};
+
+// ── Toast ─────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ── Falling petals ────────────────────────────────────────────────────
+function spawnPetals(n) {
+  const container = document.getElementById('petals');
+  for (let i = 0; i < n; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (3 + Math.random() * 4) + 's';
+    p.style.animationDelay = (Math.random() * 2) + 's';
+    p.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 8000);
+  }
+}
+
+// Initial petals
+spawnPetals(8);
+setInterval(() => spawnPetals(2), 5000);
+
+// ── Flame particles ───────────────────────────────────────────────────
+(function spawnFlames() {
+  const container = document.getElementById('bgFlames');
+  for (let i = 0; i < 18; i++) {
+    const f = document.createElement('div');
+    f.className = 'flame-particle';
+    const h = 20 + Math.floor(Math.random() * 30);
+    f.style.left = (Math.random() * 100) + 'vw';
+    f.style.height = h + 'px';
+    f.style.background = `hsl(${20 + Math.random()*30}, 100%, ${50 + Math.random()*20}%)`;
+    f.style.animationDuration = (3 + Math.random() * 5) + 's';
+    f.style.animationDelay = (Math.random() * 5) + 's';
+    container.appendChild(f);
+  }
+})();
+
+// ── Init blessing text ────────────────────────────────────────────────
+blessingEl.textContent = slides[0].blessing;
+
+// Preload voices
+window.speechSynthesis?.getVoices();
+window.speechSynthesis?.addEventListener('voiceschanged', () => {});
+</script>
+</body>
+</html>
